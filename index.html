@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автокъща - Премиум автомобили</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .intro h2 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .car-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .car-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bmw-img {
+            background: linear-gradient(135deg, #0066b1, #003d6b);
+        }
+
+        .mercedes-img {
+            background: linear-gradient(135deg, #2c2c2c, #000000);
+        }
+
+        .audi-img {
+            background: linear-gradient(135deg, #bb0a30, #8b0000);
+        }
+
+        .dodge-img {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+        }
+
+        .car-info {
+            padding: 1.5rem;
+        }
+
+        .car-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .car-info .model {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .car-info .features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .car-info .features li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        .car-info .features li:before {
+            content: "✓ ";
+            color: #0066b1;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #0066b1, #004a8f);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .contact-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .contact-section h2 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            font-weight: bold;
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        .contact-info a {
+            color: #0066b1;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .working-hours {
+            margin-top: 1.5rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-content h2 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-models {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-info {
+            background-color: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-info p {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚗 Премиум Автокъща</h1>
+        <p>Вашият партньор за луксозни автомобили</p>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Добре дошли в нашата автокъща!</h2>
+            <p>Предлагаме най-добрите марки автомобили с гарантирано качество. Свържете се с нас за повече информация и цени.</p>
+        </div>
+
+        <div class="cars-grid">
+            <!-- BMW Card -->
+            <div class="car-card" onclick="openModal('BMW', 'Серия 5, X5, M3')">
+                <div class="car-image bmw-img">
+                    <div class="car-icon">🚗</div>
+                    <div>BMW</div>
+                </div>
+                <div class="car-info">
+                    <h3>BMW</h3>
+                    <p class="model">Серия 5, X5, M3</p>
+                    <ul class="features">
+                        <li>Немски инженеринг</li>
+                        <li>Спортна елегантност</li>
+                        <li>Високи технологии</li>
+                        <li>Отлична динамика</li>
+                    </ul>
+                    <div class="price-tag">
+                        Цена при запитване
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mercedes Card -->
+            <div class="car-card" onclick="openModal('Mercedes-Benz', 'C-Class, E-Class, GLE')">
+                <div class="car-image mercedes-img">
+                    <div class="car-icon">⭐</div>
+                    <div>Mercedes</div>
+                </div>
+                <div class="car-info">
+                    <h3>Mercedes-Benz</h3>
+                    <p class="model">C-Class, E-Class, GLE</p>
+                    <ul class="features">
+                        <li>Луксозен комфорт</li>
+                        <li>Престижна марка</li>
+                        <li>Иновативни системи</li>
+                        <li>Изключителна безопасност</li>
+                    </ul>
+                    <div class="price-tag">
+                        Цена при запитване
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audi Card -->
+            <div class="car-card" onclick="openModal('Audi', 'A4, Q5, RS6')">
+                <div class="car-image audi-img">
+                    <div class="car-icon">🏎️</div>
+                    <div>AUDI</div>
+                </div>
+                <div class="car-info">
+                    <h3>Audi</h3>
+                    <p class="model">A4, Q5, RS6</p>
+                    <ul class="features">
+                        <li>Quattro технология</li>
+                        <li>Модерен дизайн</li>
+                        <li>Висока производителност</li>
+                        <li>Премиум материали</li>
+                    </ul>
+                    <div class="price-tag">
+                        Цена при запитване
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dodge Card -->
+            <div class="car-card" onclick="openModal('Dodge', 'Challenger, Charger, Durango')">
+                <div class="car-image dodge-img">
+                    <div class="car-icon">🔥</div>
+                    <div>DODGE</div>
+                </div>
+                <div class="car-info">
+                    <h3>Dodge</h3>
+                    <p class="model">Challenger, Charger, Durango</p>
+                    <ul class="features">
+                        <li>Американска мощ</li>
+                        <li>Мускулест дизайн</li>
+                        <li>V8 двигатели</li>
+                        <li>Забавление при шофиране</li>
+                    </ul>
+                    <div class="price-tag">
+                        Цена при запитване
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>Свържете се с нас</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <p>Телефон</p>
+                    <div class="contact-info">
+                        <a href="tel:+359888123456">+359 888 123 456</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <p>Email</p>
+                    <div class="contact-info">
+                        <a href="mailto:info@premiumcars.bg">info@premiumcars.bg</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <p>Адрес</p>
+                    <div class="contact-info">
+                        <span>София, бул. "Цариградско шосе" 100</span>
+                    </div>
+                </div>
+            </div>
+            <p class="working-hours">Работно време: Пон-Пет 9:00-18:00, Съб 10:00-14:00</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Премиум Автокъща. Всички права запазени.</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2 id="modal-title"></h2>
+            <p class="modal-models" id="modal-models"></p>
+            <div class="modal-info">
+                <p>За повече информация и цени, моля свържете се с нас:</p>
+                <p><strong>📞 +359 888 123 456</strong></p>
+                <p><strong>✉️ info@premiumcars.bg</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(brand, models) {
+            document.getElementById('modal-title').textContent = brand;
+            document.getElementById('modal-models').textContent = models;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
